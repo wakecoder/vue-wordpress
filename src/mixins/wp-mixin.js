@@ -27,7 +27,7 @@ export default {
                         loader.pagesLoaded++
                     })
                 },
-                pagesLeft: true // This updated based on the X-WP-TotalPages header and pagesLoaded
+                pagesLeft: true // This should be updated based on the X-WP-TotalPages header and pagesLoaded
             }
             loader.loadPage()
             return loader
