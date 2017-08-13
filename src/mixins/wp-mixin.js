@@ -18,10 +18,11 @@ export default {
          * @param {object} options - An object that may contain any or none of the following:
          *      mapper: a function that takes JSON and maps it to an object. See mapPosts for an example. Useful for custom types.
          *      queryParams: an array containing any additional query parameter key-value pairs (see example.vue).
+         *      embed: a boolean indicating whether media links and other links should be embedded in the response. **Default is true.**
          */
         createWpLoader(url, options) {
             let mapper = options.mapper ? options.mapper : this.mapPosts
-            url += '?'
+            url += options.embed !== false ? '?_embed&' : '?'
             if (safeGet(options, 'queryParams.length') > 0) {
                 url += options.queryParams.join('&') + '&'
             }
@@ -47,9 +48,9 @@ export default {
         mapPosts: function (json) {
             return json.map(p => {
                 return {
-                    imgSrc: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.single_thumb.source_url'),
-                    imgSrcLarge: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.full.source_url'),
-                    imgSrcSquare: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.thumbnail.source_url'),
+                    imgSrcThumbnail: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.thumbnail.source_url'),
+                    imgSrcMedium: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.medium.source_url'),
+                    imgSrcFull: safeGet(p, '_embedded.wp:featuredmedia[0].media_details.sizes.full.source_url'),
                     title: safeGet(p, 'title.rendered'),
                     content: safeGet(p, 'content.rendered'),
                     excerpt: safeGet(p, 'excerpt.rendered'),
