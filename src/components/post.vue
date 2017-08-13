@@ -1,12 +1,14 @@
 <template>
-    <div>
-        <h2 v-html="post.title"></h2>
+    <div class="post-container">
+        <slot name="beforeTitle"></slot>
+        <h2 v-html="post.title" class="post-title"></h2>
         <div class="col-xs-12 width-auto">
-            <img :src="post.imgSrcLarge" class="posts-img-padding post-img-float">
-            <eek-social-bar :title="post.title" :quote="post.title" :media="post.imgSrc" :share-url="post.bareUrl"></eek-social-bar>
-            <div v-html="post.content">
+            <slot name="beforeImage"></slot>
+            <img :src="post.imgSrcLarge" class="post-img post-img-float">
+            <slot name="beforeContent"></slot>
+            <div v-html="post.content" class="post-content">
             </div>
-            <eek-social-bar :title="post.title" :quote="post.title" :media="post.imgSrc" :share-url="post.bareUrl"></eek-social-bar>
+            <slot name="afterContent"></slot>
         </div>
     </div>
 </template>
@@ -17,13 +19,9 @@
 }
 </style>
 <script>
-import eekSocialBar from './eek-social-bar'
 export default {
     name: 'post',
-    props: ['post'],
-    components: {
-        eekSocialBar
-    }
+    props: ['post']
 }
 
 </script>

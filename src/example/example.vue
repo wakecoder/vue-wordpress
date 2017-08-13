@@ -8,6 +8,9 @@
     <div class="flex-container">
       <div class="col-sm">
         <h4>post-summary</h4>
+        <async-content :loaded="postLoader.pages[0].loaded">
+          <post-summary v-for="(post,index) of postLoader.pages[0].content" :post="post" :key="index"></post-summary>
+        </async-content>
       </div>
       <div class="col-sm">
         <h4>single-post</h4>
@@ -21,11 +24,26 @@
 </template>
 
 <script>
+import wpMixin from 'vue-wordpress/mixins/wp-mixin'
+import asyncContent from 'vue-wordpress/components/async-content.vue'
+import allPosts from 'vue-wordpress/components/all-posts.vue'
+import post from 'vue-wordpress/components/post.vue'
+import postSummary from 'vue-wordpress/components/post-summary.vue'
+
 export default {
   name: 'example',
+  mixins: [wpMixin],
+  components: {
+    asyncContent,
+    allPosts,
+    post,
+    postSummary
+  },
   data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      postLoader: this.createWpLoader('https://pixelthin.com/content/wp-json/wp/v2/posts', {
+        queryParams: ['orderby=title', 'search=example', 'per_page=4']
+      })
     }
   }
 }
@@ -62,6 +80,7 @@ h4 {
   width: 45%;
   margin: 2px;
   background-color: #CCDCDC;
+  min-width: 400px;
 }
 
 .col-lg {

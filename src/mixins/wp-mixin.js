@@ -12,7 +12,19 @@ const wpGet = function ({ url, mapper }) {
 }
 export default {
     methods: {
-        createWpLoader: function (queryUrl, mapper) {
+        /**
+         *
+         * @param {*} url - The URL of the WP REST endpoint (Ex: https://pixelthin.com/content/wp-json/wp/v2/posts)
+         * @param {object} options - An object that may contain any or none of the following:
+         *      mapper: a function that takes JSON and maps it to an object. See mapPosts for an example. Useful for custom types.
+         *      queryParams: an array containing any additional query parameter key-value pairs (see example.vue).
+         */
+        createWpLoader(url, options) {
+            let mapper = options.mapper ? options.mapper : this.mapPosts
+            url += '?'
+            if (safeGet(options, 'queryParams.length') > 0) {
+                url += options.queryParams.join('&') + '&'
+            }
             const loader = {
                 totalPages: undefined,
                 pagesLoaded: 0,
@@ -21,7 +33,7 @@ export default {
                     const pageToLoad = loader.pagesLoaded + 1
                     const newPage = { loaded: false, content: [] }
                     loader.pages.push(newPage)
-                    wpGet({ url: queryUrl + '&page=' + pageToLoad, mapper }).then(content => {
+                    wpGet({ url: url + 'page=' + pageToLoad, mapper }).then(content => {
                         newPage.content = content
                         newPage.loaded = true
                         loader.pagesLoaded++

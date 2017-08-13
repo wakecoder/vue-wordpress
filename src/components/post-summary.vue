@@ -2,10 +2,14 @@
     <div>
         <div v-if="post" class="post-summary-container">
             <router-link :to="post.link" class="no-decor">
+                <slot name="beforeImage"></slot>
                 <img :src="post.imgSrc" class="post-summary-img" align="left">
+                <slot name="beforeTitle"></slot>
                 <h3 v-html="post.title" class="post-summary-title"></h3>
+                <slot name="beforeSummary"></slot>
                 <div class="post-summary-excerpt" v-html="post.example">
                 </div>
+                <slot class="afterSummary"></slot>
             </router-link>
         </div>
     </div>
