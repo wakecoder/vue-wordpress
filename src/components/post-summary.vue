@@ -1,15 +1,17 @@
 <template>
     <div>
-        <div v-if="post" class="post-summary-container">
+        <div v-if="post">
             <router-link :to="post.link" class="no-decor">
-                <slot name="beforeImage"></slot>
-                <img :src="post[imageSource]" class="post-summary-img" align="left">
-                <slot name="beforeTitle"></slot>
-                <h3 v-html="post.title" class="post-summary-title"></h3>
-                <slot name="beforeSummary"></slot>
-                <div class="post-summary-excerpt" v-html="post.excerpt">
-                </div>
-                <slot class="afterSummary"></slot>
+                <slot name="image">
+                    <img :src="post[imageSource]" class="post-summary-img" align="left">
+                </slot>
+                <slot name="title">
+                    <h3 v-html="post.title" class="post-summary-title"></h3>
+                </slot>
+                <slot name="excerpt">
+                    <div class="post-summary-excerpt" v-html="post.excerpt">
+                    </div>
+                </slot>
             </router-link>
         </div>
     </div>
