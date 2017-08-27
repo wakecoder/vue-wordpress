@@ -9,7 +9,7 @@
       <div class="col-sm">
         <h4>post-summary</h4>
         <!-- In this example, we're just loading one page of results from the WP-REST API. 
-                          For an example of loading more than one post, see the single-post section-->
+                              For an example of loading more than one post, see the single-post section-->
         <async-content :loaded="postLoader.pages[0].loaded">
           <div v-for="(post,index) of postLoader.pages[0].content" :key="index">
             <post-summary :post="post" class="post-summary"></post-summary>
@@ -20,7 +20,7 @@
       <div class="col-sm">
         <h4>single-post</h4>
         <!-- In this example we're loading one post at a time and letting the user pull a new on in dynamically
-                    whenever they click a button -->
+                        whenever they click a button -->
         <div v-for="(page,index) of singlePostLoader.pages" :key="index">
           <async-content :loaded="page.loaded">
             <!-- This post loader only contains one post per page (we set per_page=1 in the post loader query params) -->
@@ -31,6 +31,7 @@
       </div>
       <div class="col-lg">
         <h4>all-posts</h4>
+        <all-posts :loader="allPostLoader"></all-posts>
       </div>
     </div>
 
@@ -64,13 +65,26 @@ export default {
       }),
       singlePostLoader: this.createWpLoader('https://pixelthin.com/content/wp-json/wp/v2/posts', {
         queryParams: ['per_page=1']
+      }),
+      allPostLoader: this.createWpLoader('https://pixelthin.com/content/wp-json/wp/v2/posts', {
+        queryParams: ['per_page=3']
       })
     }
   }
 }
 </script>
 
-<style scoped>
+<style>
+.all-posts-ul {
+  list-style: none;
+}
+
+.all-posts-li {
+  margin: 10px;
+  background-color: lightgray;
+  overflow: hidden;
+}
+
 p {
   text-align: left;
   margin-left: 10%;
