@@ -2,6 +2,16 @@
 
 > A collection of Vue components and mixins for use with WordPress and the WP-REST API
 
+# Example:
+
+Check out the example in src/example/example.vue
+
+You can run the example by running npm run dev (see below)
+
+You can see the components used 'in the wild' at http://pixelthin.com
+
+You can see the example.vue app live at http://pixelthin.com/vue-wordpress
+
 ## Build Setup
 
 ``` bash
