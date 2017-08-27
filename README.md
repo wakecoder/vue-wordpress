@@ -14,6 +14,9 @@ You can see the example.vue app live at http://pixelthin.com/vue-wordpress
 
 ## Build Setup
 
+#### &#x1F537; Note: You may experience a babel-preset-env error when running 'npm run dev'
+-- to fix this, please execute 'npm install --save-dev babel-preset-env'. See Babel issue 186 for more information <https://github.com/babel/babel-preset-env/issues/186>
+
 ``` bash
 # install dependencies
 npm install
