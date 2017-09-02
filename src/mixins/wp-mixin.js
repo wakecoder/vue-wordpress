@@ -47,6 +47,11 @@ export default {
             loader.loadPage()
             return loader
         },
+
+        /**
+         * This method is a default mapper for WP-REST posts. Any mapper can be used with the post loader
+         * but this one has most of the commonly used properties.
+         */
         mapPosts: function (json) {
             return json.map(p => {
                 return {

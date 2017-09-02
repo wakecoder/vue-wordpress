@@ -3,7 +3,7 @@
         <div v-if="post">
             <router-link :to="post.link" class="no-decor">
                 <slot name="image">
-                    <img :src="post[imageSource]" class="post-summary-img" align="left">
+                    <img :src="imageSource" class="post-summary-img" align="left">
                 </slot>
                 <slot name="title">
                     <h3 v-html="post.title" class="post-summary-title"></h3>
@@ -18,7 +18,9 @@
 </template>
 <style></style>
 <script>
+import getImageSourceMixin from '../mixins/get-image-source-mixin'
 export default {
+    mixins: [getImageSourceMixin],
     name: 'post-summary',
     // @post is the post / wp custom type object return by the wp-mixin mapper
     // @imgSize can be Thumbnail, Medium or Full. Any other value will require a custom mapper that generates a property
@@ -27,7 +29,7 @@ export default {
     props: ['post', 'imgSize'],
     computed: {
         imageSource() {
-            return this.imgSize ? 'imgSrc' + this.imgSize : 'imgSrcMedium'
+            return this.getImageSource(this.post, this.imgSize)
         }
     }
 }

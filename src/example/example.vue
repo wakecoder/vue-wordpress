@@ -17,7 +17,7 @@
                                     For an example of loading more than one post, see the single-post section-->
         <async-content :loaded="postLoader.pages[0].loaded">
           <div v-for="(post,index) of postLoader.pages[0].content" :key="index">
-            <post-summary :post="post" class="post-summary"></post-summary>
+            <post-summary imgSize="thumbnail" :post="post" class="post-summary"></post-summary>
             </br>
           </div>
         </async-content>

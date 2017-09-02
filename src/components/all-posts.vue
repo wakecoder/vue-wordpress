@@ -9,10 +9,10 @@
                     </li>
                 </ul>
             </async-content>
-            <slot name="button">
-                <button type="button" @click="loader.loadPage()" class="all-posts-more-button"> Load More Posts</button>
-            </slot>
         </div>
+        <slot name="button">
+            <button type="button" @click="loader.loadPage()" class="all-posts-more-button"> Load More Posts</button>
+        </slot>
     </div>
 </template>
 <script>
