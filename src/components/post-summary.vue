@@ -18,9 +18,9 @@
 </template>
 <style></style>
 <script>
-import getImageSourceMixin from '../mixins/get-image-source-mixin'
+import wpMixin from '../mixins/wp-mixin'
 export default {
-    mixins: [getImageSourceMixin],
+    mixins: [wpMixin],
     name: 'post-summary',
     // @post is the post / wp custom type object return by the wp-mixin mapper
     // @imgSize can be Thumbnail, Medium or Full. Any other value will require a custom mapper that generates a property

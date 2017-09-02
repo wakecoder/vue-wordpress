@@ -1,6 +1,5 @@
 require('es6-promise').polyfill()
 import safeGet from 'safe-get'
-import getTagsMixin from './get-tags-mixin'
 import 'whatwg-fetch'
 
 // wpGet just wraps some of the basic fetch boilerplate
@@ -11,8 +10,8 @@ const wpGet = function ({ url, mapper }) {
             return mapper(json)
         })
 }
+
 export default {
-    mixins: [getTagsMixin],
     methods: {
         /**
          *
@@ -68,6 +67,36 @@ export default {
                     tags: this.getTags(p)
                 }
             })
+        },
+        /**
+       *
+       * @param {object} post - WP-REST response for a single post / custom type
+       * @param {string} imgSize - the size of the image (e.g. Thumbnail, Medium, Full) Any other value
+       * will require a custom mapper that generates a property with the appropriate imgSrc property
+       *  name. Example: if imgSize = 'SmallThumb' the mapper must return an object with a property
+       *  called 'imgSrcSmallThumb' that contains a URL to the appropriate media.
+       */
+        getImageSource(post, imgSize) {
+            if (imgSize && imgSize.length > 0) {
+                // Make sure the first character is upper cased -- to create a property name like: imgSrcMedium
+                imgSize = imgSize.charAt(0).toUpperCase() + imgSize.slice(1)
+                return post['imgSrc' + imgSize]
+            }
+            return post['imgSrcMedium']
+        },
+        /**
+        * Goes through the embedded portion of a WP-REST response and pulls out tags (or any
+        * other taxonomy). If tagTaxononmy isn't specified, it defaults to 'post_tag'
+        * @param {object} postJson
+        * @param {string} tagTaxonomy
+        */
+        getTags(postJson, tagTaxonomy) {
+            const wpTerm = safeGet(postJson, '_embedded.wp:term')
+            tagTaxonomy = tagTaxonomy || 'post_tag'
+            return wpTerm ? wpTerm.reduce((previous, current) => {
+                return previous.concat(current.filter(t => t.taxonomy === tagTaxonomy)
+                    .map(t => t.slug))
+            }, []) : []
         }
     }
 }

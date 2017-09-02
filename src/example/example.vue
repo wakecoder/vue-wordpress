@@ -1,10 +1,13 @@
 <template>
   <div>
     <h1>vue-wordpress</h1>
-    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site. The most used and useful pieces of this repo are probably the mixins:
+    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site. The most used and useful pieces of this repo are probably methods in the mixin:
       <ul>
-        <li>wp-mixin simplifies pulling data from the WP-REST API with postLoaders.</li>
-        <li>get-tags-mixin is a method that can be used in the map function of a post loader to get all tags associated with a post.</li>
+        <li>createWpLoader simplifies pulling data from the WP-REST API with postLoaders. PostLoaders support pagination and simplify async fetching of data. Support custom mappers.</li>
+        <li>mapPosts is a default map function for use with createWpLoader to map the REST-API response for posts into a simpler data format.
+        <li>getTags is a function that can be used in the map function of a post loader to get all tags associated with a post.</li>
+        <li>getImageSource is a function that maps simple image sizes to WP-REST mapper properties</li>
+        <li>getPostRestUrl is a function that will take a url and map it to the corresponding WP-REST API. This can be used to pull posts from the WP-REST API based upon the route in vue-router. For an example see <a href="https://pixelthin.com">Pixelthin.com</a></li>
       </ul>
     </p>
     <h2>Examples:</h2>
