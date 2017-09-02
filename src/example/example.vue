@@ -1,15 +1,20 @@
 <template>
   <div>
     <h1>vue-wordpress</h1>
-    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site.
+    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site. The most used and useful pieces of this repo are probably the mixins:
+      <ul>
+        <li>wp-mixin simplifies pulling data from the WP-REST API with postLoaders.</li>
+        <li>get-tags-mixin is a method that can be used in the map function of a post loader to get all tags associated with a post.</li>
+      </ul>
     </p>
     <h2>Examples:</h2>
-    <p>Each of the following examples utilizes the wp-mixin and the async-content component.</p>
+    <p>Each of the following examples utilizes the wp-mixin and the async-content component. Check out the example source for more information on how to use the mixins. The post visual vue components may also be of use but, if you want to really customize them it may be easier to just use them as a template and create your own components using the mixins.
+    </p>
     <div class="flex-container">
       <div class="col-sm">
         <h4>post-summary</h4>
         <!-- In this example, we're just loading one page of results from the WP-REST API. 
-                              For an example of loading more than one post, see the single-post section-->
+                                    For an example of loading more than one post, see the single-post section-->
         <async-content :loaded="postLoader.pages[0].loaded">
           <div v-for="(post,index) of postLoader.pages[0].content" :key="index">
             <post-summary :post="post" class="post-summary"></post-summary>
@@ -20,7 +25,7 @@
       <div class="col-sm">
         <h4>single-post</h4>
         <!-- In this example we're loading one post at a time and letting the user pull a new on in dynamically
-                        whenever they click a button -->
+                              whenever they click a button -->
         <div v-for="(page,index) of singlePostLoader.pages" :key="index">
           <async-content :loaded="page.loaded">
             <!-- This post loader only contains one post per page (we set per_page=1 in the post loader query params) -->

@@ -1,5 +1,6 @@
 require('es6-promise').polyfill()
 import safeGet from 'safe-get'
+import getTagsMixin from './get-tags-mixin'
 import 'whatwg-fetch'
 
 // wpGet just wraps some of the basic fetch boilerplate
@@ -11,6 +12,7 @@ const wpGet = function ({ url, mapper }) {
         })
 }
 export default {
+    mixins: [getTagsMixin],
     methods: {
         /**
          *
@@ -56,7 +58,9 @@ export default {
                     excerpt: safeGet(p, 'excerpt.rendered'),
                     author: safeGet(p, '_embedded.author[0].name'),
                     link: { path: '/' + safeGet(p, 'slug') }, // TODO: Should this be moved to link from slug?
-                    bareUrl: safeGet(p, 'link')
+                    bareUrl: safeGet(p, 'link'),
+                    date: safeGet(p, 'date'),
+                    tags: this.getTags(p)
                 }
             })
         }
