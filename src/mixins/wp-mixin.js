@@ -97,6 +97,26 @@ export default {
                 return previous.concat(current.filter(t => t.taxonomy === tagTaxonomy)
                     .map(t => t.slug))
             }, []) : []
+        },
+        /**
+         * Takes a vue-router route object (this.$route) and returns the appropriate WP-REST API post loader.
+         * This can be used with default (*) routing in the vue-router to dynamically pull in full posts.
+         * Note: This makes the assumptions that your WP install is using slugs for permalinks
+         * @param {object} options - {
+         * {object} route: the vue-router route object (this.$route)
+         * {string} baseUrl - Specifies the base URL for the WP-REST install (e.g. 'https://pixelthing.com/blog')
+         * {string} postTypes - Optional. Can be used to specify a custom post type. Defaults to 'posts'
+         * {array} queryParams - Optional. Can be used to specify additional query parameters for the wp loader
+         * {bool} embed - Optional. Indicates whether links, tags, image URLs, etc. should be returned embedded in the WP REST response. Defaults to true.
+         * {function} mapper - Optional. Used to map the WP-REST API response into a simpler object. Defaults to mapPosts
+         */
+        createWpLoaderFromRoute({ route, baseUrl, type, queryParams, embed, mapper }) {
+            let slug = route.params.slug || route.params[0]
+            type = type || 'posts'
+            const url = baseUrl + '/wp-json/wp/v2/' + type
+            queryParams = queryParams || []
+            queryParams.push('slug=' + slug)
+            return this.createWpLoader(url, { queryParams, embed, mapper })
         }
     }
 }
