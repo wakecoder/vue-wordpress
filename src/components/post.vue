@@ -21,9 +21,11 @@
 }
 </style>
 <script>
+import wpMixin from '../mixins/wp-mixin'
 export default {
     name: 'post',
     props: ['post', 'imgSize'],
+    mixins: [wpMixin],
     computed: {
         imageSource() {
             return this.getImageSource(this.post, this.imgSize)
