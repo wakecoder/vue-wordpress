@@ -5,7 +5,7 @@
         </slot>
         <div class="col-xs-12 width-auto">
             <slot name="image">
-                <img :src="post.imgSrcLarge" class="post-img post-img-float">
+                <img :src="imageSource" class="post-img post-img-float">
             </slot>
             <slot name="content">
                 <div v-html="post.content" class="post-content">
@@ -23,7 +23,12 @@
 <script>
 export default {
     name: 'post',
-    props: ['post']
+    props: ['post', 'imgSize'],
+    computed: {
+        imageSource() {
+            return this.getImageSource(this.post, this.imgSize)
+        }
+    }
 }
 
 </script>
