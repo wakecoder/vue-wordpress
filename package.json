@@ -1,6 +1,6 @@
 {
   "name": "vue-wordpress",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "A collection of Vue components and mixins for use with WordPress and the WP-REST API",
   "author": "WakeCoder <ajqajq@gmail.com>",
   "scripts": {
