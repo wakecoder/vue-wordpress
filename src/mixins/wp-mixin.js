@@ -3,8 +3,8 @@ import safeGet from 'safe-get'
 import 'whatwg-fetch'
 
 // wpGet just wraps some of the basic fetch boilerplate
-const wpGet = function ({ url, mapper }) {
-    return fetch(url)
+const wpGet = function ({ url, mapper, fetchOptions }) {
+    return fetch(url, fetchOptions)
         .then(res => res.json())
         .then(json => {
             return mapper(json)
@@ -20,8 +20,10 @@ export default {
          *      mapper: a function that takes JSON and maps it to an object. See mapPosts for an example. Useful for custom types.
          *      queryParams: an array containing any additional query parameter key-value pairs (see example.vue).
          *      embed: a boolean indicating whether media links and other links should be embedded in the response. **Default is true.**
+         * @param {object} fetchOptions - An object that contains options for the fetch call. See https://github.github.io/fetch/ for more
+         *      informaiton. NOTE: Must set {credentials: 'include' | 'same-site'} for endpoints requiring cookie authentication.
          */
-        createWpLoader(url, options) {
+        createWpLoader(url, options, fetchOptions) {
             let mapper = options.mapper ? options.mapper : this.mapPosts
             url += options.embed !== false ? '?_embed&' : '?'
             if (safeGet(options, 'queryParams.length') > 0) {
@@ -35,7 +37,7 @@ export default {
                     const pageToLoad = loader.pagesLoaded + 1
                     const newPage = { loaded: false, content: [] }
                     loader.pages.push(newPage)
-                    wpGet({ url: url + 'page=' + pageToLoad, mapper }).then(content => {
+                    wpGet({ url: url + 'page=' + pageToLoad, mapper, fetchOptions }).then(content => {
                         newPage.content = content
                         newPage.loaded = true
                         loader.pagesLoaded++

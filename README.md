@@ -1,6 +1,9 @@
 # vue-wordpress
 
-> A collection of Vue components and mixins for use with WordPress and the WP-REST API
+> A vue plugin that facilitates use of the WordPress REST API as a back-end Content Management System (CMS) with a Vue front-end
+
+# Design overview
+
 
 # Example:
 
@@ -10,9 +13,26 @@ You can run the example by running npm run dev (see below)
 
 You can see the components used 'in the wild' at http://pixelthin.com
 
-You can see the example.vue app live at http://pixelthin.com/vue-wordpress
+## Getting Started
 
-## Build Setup
+### Vue installation
+
+```
+vue add vue-wordpress
+
+```
+
+### How to use vue-wordpress in your Vue app
+
+Anywhere you wish to pull in content from WordPress, simply do the following:
+```
+
+<div v-for="(post,index) of postLoader.pages[0].content" :key="index">
+    <post-summary imgSize="thumbnail" :post="post" class="post-summary"></post-summary>
+    </br>
+</div>
+
+```
 
 #### &#x1F537; Note: You may experience a babel-preset-env error when running 'npm run dev'
 -- to fix this, please execute 'npm install --save-dev babel-preset-env'. See Babel issue 186 for more information <https://github.com/babel/babel-preset-env/issues/186>

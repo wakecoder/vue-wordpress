@@ -1,48 +1,50 @@
 <template>
   <div>
     <h1>vue-wordpress</h1>
-    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site. The most used and useful pieces of this repo are probably methods in the mixin:
-      <ul>
-        <li>createWpLoader simplifies pulling data from the WP-REST API with WP loaders. WP loaders support pagination and simplify async fetching of data. Support custom mappers.</li>
-        <li>mapPosts is a default map function for use with createWpLoader to map the REST-API response for posts into a simpler data format.
-        <li>getTags is a function that can be used in the map function of a post loader to get all tags associated with a post.</li>
-        <li>getImageSource is a function that maps simple image sizes to WP-REST mapper properties</li>
-        <li>getPostRestUrl is a function that will take a url and map it to the corresponding WP-REST API. This can be used to pull posts from the WP-REST API based upon the route in vue-router. For an example see <a href="https://pixelthin.com">Pixelthin.com</a></li>
-      </ul>
-    </p>
+    <p>A collection of vue.js components and mixins for interfacing with the WordPress REST API. For information on how to use vue-wordpress, go to the github site. The most used and useful pieces of this repo are probably methods in the mixin:</p>
+    <ul>
+      <li>createWpLoader simplifies pulling data from the WP-REST API with WP loaders. WP loaders support pagination and simplify async fetching of data. Support custom mappers.</li>
+      <li>mapPosts is a default map function for use with createWpLoader to map the REST-API response for posts into a simpler data format.</li>
+      <li>getTags is a function that can be used in the map function of a post loader to get all tags associated with a post.</li>
+      <li>getImageSource is a function that maps simple image sizes to WP-REST mapper properties</li>
+      <li>
+        getPostRestUrl is a function that will take a url and map it to the corresponding WP-REST API. This can be used to pull posts from the WP-REST API based upon the route in vue-router. For an example see
+        <a
+          href="https://pixelthin.com"
+        >Pixelthin.com</a>
+      </li>
+    </ul>
     <h2>Examples:</h2>
-    <p>Each of the following examples utilizes the wp-mixin and the async-content component. Check out the example source for more information on how to use the mixins. The post visual vue components may also be of use but, if you want to really customize them it may be easier to just use them as a template and create your own components using the mixins.
-    </p>
+    <p>Each of the following examples utilizes the wp-mixin and the async-content component. Check out the example source for more information on how to use the mixins. The post visual vue components may also be of use but, if you want to really customize them it may be easier to just use them as a template and create your own components using the mixins.</p>
     <div class="flex-container">
       <div class="col-sm">
         <h4>post-summary</h4>
-        <!-- In this example, we're just loading one page of results from the WP-REST API. 
-                                    For an example of loading more than one post, see the single-post section-->
-        <async-content :loaded="postLoader.pages[0].loaded">
+        <!-- In this example, we're loading the results from the WP-REST API. -->
+        <!-- <async-content :loaded="postLoader.pages[0].loaded"> -->
+        <div v-for="(pages, index) of postLoader.pages" :key="index">
           <div v-for="(post,index) of postLoader.pages[0].content" :key="index">
             <post-summary imgSize="thumbnail" :post="post" class="post-summary"></post-summary>
-            </br>
+            <br />
           </div>
-        </async-content>
-      </div>
-      <div class="col-sm">
-        <h4>single-post</h4>
-        <!-- In this example we're loading one post at a time and letting the user pull a new on in dynamically
-                              whenever they click a button -->
-        <div v-for="(page,index) of singlePostLoader.pages" :key="index">
-          <async-content :loaded="page.loaded">
-            <!-- This post loader only contains one post per page (we set per_page=1 in the post loader query params) -->
-            <post :post="page.content[0]"></post>
-          </async-content>
         </div>
-        <button type="button" @click="singlePostLoader.loadPage()"> Load Another Post</button>
-      </div>
-      <div class="col-lg">
-        <h4>all-posts</h4>
-        <all-posts :loader="allPostLoader"></all-posts>
+        <div class="col-sm">
+          <h4>single-post</h4>
+          <!-- In this example we're loading one post at a time and letting the user pull a new on in dynamically
+          whenever they click a button-->
+          <div v-for="(page,index) of singlePostLoader.pages" :key="index">
+            <async-content :loaded="page.loaded">
+              <!-- This post loader only contains one post per page (we set per_page=1 in the post loader query params) -->
+              <post :post="page.content[0]"></post>
+            </async-content>
+          </div>
+          <button type="button" @click="singlePostLoader.loadPage()">Load Another Post</button>
+        </div>
+        <div class="col-lg">
+          <h4>all-posts</h4>
+          <all-posts :loader="allPostLoader"></all-posts>
+        </div>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -121,13 +123,13 @@ h4 {
 .col-sm {
   width: 45%;
   margin: 2px;
-  background-color: #CCDCDC;
+  background-color: #ccdcdc;
   min-width: 400px;
 }
 
 .col-lg {
   width: 90%;
   margin: 4px;
-  background-color: #CCDCDC;
+  background-color: #ccdcdc;
 }
 </style>
