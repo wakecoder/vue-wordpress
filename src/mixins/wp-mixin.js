@@ -3,7 +3,7 @@ import safeGet from 'safe-get'
 import 'whatwg-fetch'
 
 // wpGet just wraps some of the basic fetch boilerplate
-const wpGet = function ({ url, mapper, fetchOptions }) {
+const wpGet = function ({ url, mapper, fetchOptions,errorCallback }) {
     return fetch(url, fetchOptions)
         .then(res => {
             if (!res.ok) {
@@ -28,7 +28,7 @@ export default {
          * @param {object} fetchOptions - An object that contains options for the fetch call. See https://github.github.io/fetch/ for more
          *      informaiton. NOTE: Must set {credentials: 'include' | 'same-site'} for endpoints requiring cookie authentication.
          */
-        createWpLoader(url, options, fetchOptions) {
+        createWpLoader(url, options, fetchOptions,errorCallback) {
             let mapper = options.mapper ? options.mapper : this.mapPosts
             url += options.embed !== false ? '?_embed&' : '?'
             if (safeGet(options, 'queryParams.length') > 0) {
@@ -42,7 +42,7 @@ export default {
                     const pageToLoad = loader.pagesLoaded + 1
                     const newPage = { loaded: false, content: [] }
                     loader.pages.push(newPage)
-                    wpGet({ url: url + 'page=' + pageToLoad, mapper, fetchOptions }).then(content => {
+                    wpGet({ url: url + 'page=' + pageToLoad, mapper, fetchOptions,errorCallback }).then(content => {
                         newPage.content = content
                         newPage.loaded = true
                         loader.pagesLoaded++
