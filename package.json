@@ -1,6 +1,6 @@
 {
   "name": "vue-wordpress",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "A collection of Vue components and mixins for use with WordPress and the WP-REST API",
   "author": "WakeCoder <ajqajq@gmail.com>",
   "contributes": {"Cameron Beck":"cameron-beck-coding <cameron@pixelthin.com>"},
