@@ -5,7 +5,12 @@ import 'whatwg-fetch'
 // wpGet just wraps some of the basic fetch boilerplate
 const wpGet = function ({ url, mapper, fetchOptions }) {
     return fetch(url, fetchOptions)
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                errorCallback(res)
+            }
+            return res.json()
+        })
         .then(json => {
             return mapper(json)
         })
@@ -42,6 +47,7 @@ export default {
                         newPage.loaded = true
                         loader.pagesLoaded++
                     })
+                    .catch(reason=>{errorCallback(reason)})
                 },
                 pagesLeft: true // This should be updated based on the X-WP-TotalPages header and pagesLoaded
             }
