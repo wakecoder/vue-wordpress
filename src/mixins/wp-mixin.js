@@ -54,9 +54,6 @@ export default {
                 pagesLeft: true // This should be updated based on the X-WP-TotalPages header and pagesLoaded
             }
             loader.loadPage()
-            if (loader.pagesLoaded === undefined) {
-                errorCallback()
-            }
             return loader
         },
 
