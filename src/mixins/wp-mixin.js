@@ -7,7 +7,7 @@ const wpGet = function ({ url, mapper, fetchOptions, errorCallback }) {
     return fetch(url, fetchOptions)
         .then(res => {
             if (!res.ok) {
-                errorCallback()
+                errorCallback(res)
             }
             return res.json()
         })
@@ -47,8 +47,8 @@ export default {
                         newPage.loaded = true
                         loader.pagesLoaded++
                     })
-                        .catch(() => {
-                            errorCallback()
+                        .catch((response) => {
+                            errorCallback(response)
                         })
                 },
                 pagesLeft: true // This should be updated based on the X-WP-TotalPages header and pagesLoaded
